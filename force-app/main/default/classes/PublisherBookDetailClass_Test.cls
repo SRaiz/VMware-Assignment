@@ -9,7 +9,7 @@ public class PublisherBookDetailClass_Test {
     
     /*
         @Author         : Sidharth Pushp
-        @BuildDate      : 22nd April, 2022
+        @BuildDate      : 24th April, 2022
         @Description    : Setup the test data for validating the PublisherBooksDetailsClassBSO class
         @Params         : none
         @Return         : none
@@ -78,6 +78,13 @@ public class PublisherBookDetailClass_Test {
         insert bookAuthorList;
     }
 
+    /*
+        @Author         : Sidharth Pushp
+        @BuildDate      : 24th April, 2022
+        @Description    : Test method to cover PublisherBooksDetailsClassBSO and PublisherBooksDetailsClassDAO classes
+        @Params         : none
+        @Return         : none
+    */
     @IsTest
     static void fetchBooksToShowOnPublisherTest() {
         Test.startTest();
