@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <apiVersion>54.0</apiVersion>
+    <description>Create a new book</description>
+    <dynamicChoiceSets>
+        <description>Genre of the book</description>
+        <name>Genre</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Genre__c</picklistField>
+        <picklistObject>Book__c</picklistObject>
+    </dynamicChoiceSets>
+    <interviewLabel>Create new book {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Create new book</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordCreates>
+        <description>Create the book record from the information on the previous screen</description>
+        <name>Create_Book_Record</name>
+        <label>Create Book Record</label>
+        <locationX>176</locationX>
+        <locationY>278</locationY>
+        <connector>
+            <targetReference>Create_Books_Author_Records</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Fault_Screen</targetReference>
+        </faultConnector>
+        <inputAssignments>
+            <field>Genre__c</field>
+            <value>
+                <elementReference>Book_Genre</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Language__c</field>
+            <value>
+                <elementReference>Language</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>Book_Name</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PublishingDate__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PublishingHouse__c</field>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Book__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <description>Create book author records</description>
+        <name>Create_Books_Author_Records</name>
+        <label>Create Books Author Records</label>
+        <locationX>176</locationX>
+        <locationY>398</locationY>
+        <connector>
+            <targetReference>Success_Screen</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Screen</targetReference>
+        </faultConnector>
+        <inputAssignments>
+            <field>Author__c</field>
+            <value>
+                <stringValue>a007Q000005q9PDQAY</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Book__c</field>
+            <value>
+                <elementReference>Create_Book_Record</elementReference>
+            </value>
+        </inputAssignments>
+        <object>BookAuthor__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <screens>
+        <description>Error message</description>
+        <name>Fault_Screen</name>
+        <label>Fault Screen</label>
+        <locationX>704</locationX>
+        <locationY>398</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Error_Message</name>
+            <fieldText>&lt;p class=&quot;ql-indent-1&quot; style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-family: courier; font-size: 16px; color: rgb(179, 4, 4);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <description>New book record information</description>
+        <name>New_Book_Information</name>
+        <label>New Book Information</label>
+        <locationX>176</locationX>
+        <locationY>158</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Create_Book_Record</targetReference>
+        </connector>
+        <fields>
+            <name>Book_Name</name>
+            <dataType>String</dataType>
+            <fieldText>Book Name</fieldText>
+            <fieldType>InputField</fieldType>
+            <helpText>&lt;p&gt;Name of the book&lt;/p&gt;</helpText>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Book_Genre</name>
+            <choiceReferences>Genre</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Genre</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <helpText>&lt;p&gt;Genre of the book&lt;/p&gt;</helpText>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Language</name>
+            <dataType>String</dataType>
+            <fieldText>Language</fieldText>
+            <fieldType>InputField</fieldType>
+            <helpText>&lt;p&gt;Language in which book is written&lt;/p&gt;</helpText>
+            <isRequired>true</isRequired>
+        </fields>
+        <nextOrFinishButtonLabel>Save</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <description>Refresh record lwc component</description>
+        <name>Refresh_Record</name>
+        <label>Refresh Record</label>
+        <locationX>176</locationX>
+        <locationY>638</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Refresh_Record_Lwc</name>
+            <extensionName>c:refreshRecordFromFlowLwc</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>recordId</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <description>Success Screen</description>
+        <name>Success_Screen</name>
+        <label>Success Screen</label>
+        <locationX>176</locationX>
+        <locationY>518</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Refresh_Record</targetReference>
+        </connector>
+        <fields>
+            <name>Book_Created_Successfully</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(32, 153, 5); font-family: courier; font-size: 16px;&quot;&gt;New book record created successfully&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>New_Book_Information</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>Record Id of the publishing house</description>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

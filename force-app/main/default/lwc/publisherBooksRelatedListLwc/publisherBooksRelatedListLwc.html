@@ -1,0 +1,50 @@
+<template>
+    <lightning-card>
+        <template if:false={noBooksToShow}>
+            
+            <div class="slds-var-m-left_medium slds-notify__content slds-text-align_left slds-var-m-bottom_small">
+                <lightning-layout>
+                    <lightning-layout-item size="6">
+                        <lightning-layout>
+                            <lightning-layout-item size="3" padding="around-small">
+                                <legend class="slds-form-element__legend slds-form-element__label">Filter by Author</legend>
+                            </lightning-layout-item>
+                            
+                            <lightning-layout-item size="7" padding="around-small">
+                                <lightning-input type="search" name="Author" placeholder="Filter by Author" 
+                                                 variant="label-hidden" onchange={filterBooks}>
+                                </lightning-input>
+                            </lightning-layout-item>
+
+                            <lightning-layout-item size="2" padding="around-small"></lightning-layout-item>
+                        </lightning-layout>
+                    </lightning-layout-item>
+                    
+                    <lightning-layout-item size="6">
+                        <lightning-layout>
+                            <lightning-layout-item size="3" padding="around-small">
+                                <legend class="slds-form-element__legend slds-form-element__label">Filter by Genre</legend>
+                            </lightning-layout-item>
+                            
+                            <lightning-layout-item size="7" padding="around-small">
+                                <lightning-input type="search" name="Genre" placeholder="Filter by Genre" 
+                                                 variant="label-hidden" onchange={filterBooks}>
+                                </lightning-input>
+                            </lightning-layout-item>
+
+                            <lightning-layout-item size="2" padding="around-small"></lightning-layout-item>
+                        </lightning-layout>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </div>
+
+            <div class="slds-scrollable">
+                <lightning-datatable key-field="id" 
+                                     columns={columns} 
+                                     data={booksByPublisherRecords} 
+                                     show-row-number-column>
+                </lightning-datatable>
+            </div>
+        </template>
+    </lightning-card>
+</template>

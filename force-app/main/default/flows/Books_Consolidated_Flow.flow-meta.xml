@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>54.0</apiVersion>
+    <decisions>
+        <description>Check if the record is created or updated</description>
+        <name>Check_for_record_creation_or_update</name>
+        <label>Check for record creation or update</label>
+        <locationX>402</locationX>
+        <locationY>335</locationY>
+        <defaultConnector>
+            <targetReference>Check_if_publishing_date_has_changed_on_book_record</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Record Update</defaultConnectorLabel>
+        <rules>
+            <name>Record_Creation</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record__Prior.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_if_publishing_date_is_present_on_book_record_0</targetReference>
+            </connector>
+            <label>Record Creation</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if publishing date has changed on book record</description>
+        <name>Check_if_publishing_date_has_changed_on_book_record</name>
+        <label>Check if publishing date has changed on book record</label>
+        <locationX>622</locationX>
+        <locationY>455</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_Publishing_Date_Changed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.PublishingDate__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Publishing_House_0_0_0</targetReference>
+            </connector>
+            <label>Has Publishing Date Changed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if publishing date is present on book record</description>
+        <name>Check_if_publishing_date_is_present_on_book_record_0</name>
+        <label>Check if publishing date is present on book record</label>
+        <locationX>182</locationX>
+        <locationY>455</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_Publishing_Date_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.PublishingDate__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Publishing_House_0_0</targetReference>
+            </connector>
+            <label>Has Publishing Date</label>
+        </rules>
+    </decisions>
+    <description>Consolidated flow for book__c</description>
+    <interviewLabel>Books Consolidated Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Books Consolidated Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>Update Relevant Publishing House</description>
+        <name>Update_Publishing_House_0_0</name>
+        <label>Update Publishing House</label>
+        <locationX>50</locationX>
+        <locationY>575</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.PublishingHouse__c</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>PublishingDateofLastReleasedBook__c</field>
+            <value>
+                <elementReference>$Record.PublishingDate__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>PublishingHouse__c</object>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Update Relevant Publishing House</description>
+        <name>Update_Publishing_House_0_0_0</name>
+        <label>Update Publishing House</label>
+        <locationX>490</locationX>
+        <locationY>575</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.PublishingHouse__c</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>PublishingDateofLastReleasedBook__c</field>
+            <value>
+                <elementReference>$Record.PublishingDate__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>PublishingHouse__c</object>
+    </recordUpdates>
+    <start>
+        <locationX>276</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Check_for_record_creation_or_update</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>PublishingHouse__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>Book__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

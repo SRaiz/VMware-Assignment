@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Genre__c</fullName>
+    <description>Genre of the book</description>
+    <externalId>false</externalId>
+    <label>Genre</label>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Fantasy</fullName>
+                <default>false</default>
+                <label>Fantasy</label>
+            </value>
+            <value>
+                <fullName>Fiction</fullName>
+                <default>false</default>
+                <label>Fiction</label>
+            </value>
+            <value>
+                <fullName>Historical fiction</fullName>
+                <default>false</default>
+                <label>Historical fiction</label>
+            </value>
+            <value>
+                <fullName>Horror</fullName>
+                <default>false</default>
+                <label>Horror</label>
+            </value>
+            <value>
+                <fullName>Mystery</fullName>
+                <default>false</default>
+                <label>Mystery</label>
+            </value>
+            <value>
+                <fullName>Non fiction</fullName>
+                <default>false</default>
+                <label>Non fiction</label>
+            </value>
+            <value>
+                <fullName>Novel</fullName>
+                <default>false</default>
+                <label>Novel</label>
+            </value>
+            <value>
+                <fullName>Romance</fullName>
+                <default>false</default>
+                <label>Romance</label>
+            </value>
+            <value>
+                <fullName>Science fiction</fullName>
+                <default>false</default>
+                <label>Science fiction</label>
+            </value>
+            <value>
+                <fullName>Comedy</fullName>
+                <default>false</default>
+                <label>Comedy</label>
+            </value>
+            <value>
+                <fullName>Tragedy</fullName>
+                <default>false</default>
+                <label>Tragedy</label>
+            </value>
+            <value>
+                <fullName>Poetry</fullName>
+                <default>false</default>
+                <label>Poetry</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
