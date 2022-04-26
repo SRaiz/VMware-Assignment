@@ -6,6 +6,7 @@ export default class DebouncedInputLwc extends LightningElement {
     @api value;
     @api labelVariant = 'label-inline';
     @api fieldName = null;
+    @api placeholder;
 
     constructor() {
         super();

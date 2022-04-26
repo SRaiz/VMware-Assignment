@@ -8,6 +8,7 @@ export default class CustomLookupLwc extends LightningElement {
     @api label = 'Lookup';
     @api fields = null;
     @api fieldName = null;
+    @api placeholder = null;
     @api tableRowId = null;     //-- Added this tableRowId for passing the row id when lookup used in table --//
 
     resultClass;

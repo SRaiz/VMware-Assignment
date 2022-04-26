@@ -1,6 +1,6 @@
-# Salesforce DX Project: Next Steps
+# VMware Assignment: 
 
-Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
+This github repo has been created for assignment given by VMware
 
 ## How Do You Plan to Deploy Your Changes?
 

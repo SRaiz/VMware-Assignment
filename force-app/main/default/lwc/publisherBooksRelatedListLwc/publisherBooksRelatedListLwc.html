@@ -4,21 +4,46 @@
             
             <div class="slds-var-m-left_medium slds-notify__content slds-text-align_left slds-var-m-bottom_small">
                 <lightning-layout>
-                    <lightning-layout-item size="6">
-                        <lightning-layout>
-                            <lightning-layout-item size="3" padding="around-small">
-                                <legend class="slds-form-element__legend slds-form-element__label">Filter by Author</legend>
-                            </lightning-layout-item>
-                            
-                            <lightning-layout-item size="7" padding="around-small">
-                                <lightning-input type="search" name="Author" placeholder="Filter by Author" 
-                                                 variant="label-hidden" onchange={filterBooks}>
-                                </lightning-input>
-                            </lightning-layout-item>
 
-                            <lightning-layout-item size="2" padding="around-small"></lightning-layout-item>
-                        </lightning-layout>
-                    </lightning-layout-item>
+                    <template if:false={showLookupCmp}>
+                        <lightning-layout-item size="6">
+                            <lightning-layout>
+                                <lightning-layout-item size="3" padding="around-small">
+                                    <legend class="slds-form-element__legend slds-form-element__label">Filter by Author</legend>
+                                </lightning-layout-item>
+                                
+                                <lightning-layout-item size="7" padding="around-small">
+                                    <lightning-input type="search" name="Author" placeholder="Filter by Author" 
+                                                     variant="label-hidden" onchange={filterBooks}
+                                                     data-id="authorSearch">
+                                    </lightning-input>
+                                </lightning-layout-item>
+
+                                <lightning-layout-item size="2" padding="around-small"></lightning-layout-item>
+                            </lightning-layout>
+                        </lightning-layout-item>
+                    </template>
+
+                    <template if:true={showLookupCmp}>
+                        <lightning-layout-item size="6">
+                            <lightning-layout>
+                                <lightning-layout-item size="3" padding="around-small">
+                                    <legend class="slds-form-element__legend slds-form-element__label">Filter by Author</legend>
+                                </lightning-layout-item>
+                                
+                                <lightning-layout-item size="7" padding="around-small">
+                                    <c-custom-lookup-lwc object-api-name="Author__c" 
+                                                         fields="FirstName__c, LastName__c" 
+                                                         icon-name="custom:custom15" 
+                                                         placeholder="Filter by Author" 
+                                                         onrecordselected={handleLookupSelection}>
+                                    </c-custom-lookup-lwc>
+                                </lightning-layout-item>
+
+                                <lightning-layout-item size="2" padding="around-small"></lightning-layout-item>
+                            </lightning-layout>
+                        </lightning-layout-item>
+                    </template>
                     
                     <lightning-layout-item size="6">
                         <lightning-layout>
@@ -28,7 +53,8 @@
                             
                             <lightning-layout-item size="7" padding="around-small">
                                 <lightning-input type="search" name="Genre" placeholder="Filter by Genre" 
-                                                 variant="label-hidden" onchange={filterBooks}>
+                                                 variant="label-hidden" onchange={filterBooks}
+                                                 data-id="genreSearch">
                                 </lightning-input>
                             </lightning-layout-item>
 

@@ -1,10 +1,11 @@
 import { api, LightningElement } from 'lwc';
 import fetchBooksToShowOnPublisher from '@salesforce/apex/PublisherBooksDetailsClassBSO.fetchBooksToShowOnPublisher';
+import Show_Lookup_Component from '@salesforce/label/c.Show_Lookup_Component';
 
 //-- Columns to show on custom related list on publisher record page --//
 const COLUMNS = [
     { label: 'Name', fieldName: 'bookName', type: 'text', hideDefaultActions: true },
-    { label: 'Genre', fieldName: 'genre', type: 'text', hideDefaultActions: true, sortable: true },
+    { label: 'Genre', fieldName: 'genre', type: 'text', hideDefaultActions: true },
     { label: 'Language', fieldName: 'language', type: 'text', hideDefaultActions: true },
     { 
         label: 'Author', fieldName: 'authorLink', type: 'url', 
@@ -22,8 +23,10 @@ export default class PublisherBooksRelatedListLwc extends LightningElement {
     booksByPublisherRecords;
     finalBooksList;
     columns = COLUMNS;
+    showLookupCmp;
 
     connectedCallback() {
+        this.showLookupCmp = ( Show_Lookup_Component === 'true' ) ? true : false;
         this.getRelatedBooksOnPublisher();
     }
 
@@ -66,6 +69,46 @@ export default class PublisherBooksRelatedListLwc extends LightningElement {
             });
             this.booksByPublisherRecords = filteredBooksByAuthorOrGenre;
             this.fireUpdateHeaderEvent(filteredBooksByAuthorOrGenre.length);
+            
+            //-- Disable the input --//
+            if (event.target.name === 'Author') {
+                if (this.template.querySelector('lightning-input[data-id=genreSearch]').disabled === false) {
+                    this.template.querySelector('lightning-input[data-id=genreSearch]').disabled = true
+                }
+            }
+            else {
+                if (this.template.querySelector('lightning-input[data-id=authorSearch]').disabled === false) {
+                    this.template.querySelector('lightning-input[data-id=authorSearch]').disabled = true
+                }
+            }
+            if (event.detail.value === '') {
+                this.template.querySelector('lightning-input[data-id=authorSearch]').disabled = false;
+                this.template.querySelector('lightning-input[data-id=genreSearch]').disabled = false
+            }
+        }
+    }
+
+    //-- Handle lookup selection on custom lookup --//
+    handleLookupSelection(event) {
+        const selectedRecord = event.detail;
+        if (selectedRecord.recordId) {
+            if (selectedRecord.recordId.Id) {
+                //-- Disable filter by genre --//
+                const ltngInput = this.template.querySelector('lightning-input[data-id=genreSearch]');
+                ltngInput.disabled = true;
+
+                const chosenAuthorId = selectedRecord.recordId.Id;
+                const filteredBooksByAuthorLookup = this.finalBooksList.filter((book) => {
+                    return chosenAuthorId === book.authorId;
+                });
+                this.booksByPublisherRecords = filteredBooksByAuthorLookup;
+                this.fireUpdateHeaderEvent(filteredBooksByAuthorLookup.length);
+            }
+        }
+        else {
+            this.booksByPublisherRecords = this.finalBooksList;
+            const ltngInput = this.template.querySelector('lightning-input[data-id=genreSearch]');
+            ltngInput.disabled = false;
         }
     }
 }
