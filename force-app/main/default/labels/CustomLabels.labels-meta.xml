@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>Show_Lookup_Component</fullName>
+        <categories>VMware Assignment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Show Lookup Component</shortDescription>
+        <value>false</value>
+    </labels>
+</CustomLabels>
