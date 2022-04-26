@@ -164,32 +164,6 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <description>Refresh record lwc component</description>
-        <name>Refresh_Record</name>
-        <label>Refresh Record</label>
-        <locationX>176</locationX>
-        <locationY>638</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <fields>
-            <name>Refresh_Record_Lwc</name>
-            <extensionName>c:refreshRecordFromFlowLwc</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>recordId</elementReference>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <showFooter>false</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
         <description>Success Screen</description>
         <name>Success_Screen</name>
         <label>Success Screen</label>
@@ -198,9 +172,6 @@
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Refresh_Record</targetReference>
-        </connector>
         <fields>
             <name>Book_Created_Successfully</name>
             <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(32, 153, 5); font-family: courier; font-size: 16px;&quot;&gt;New book record created successfully&lt;/span&gt;&lt;/p&gt;</fieldText>
