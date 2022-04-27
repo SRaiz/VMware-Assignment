@@ -24,6 +24,8 @@ export default class PublisherBooksRelatedListLwc extends LightningElement {
     finalBooksList;
     columns = COLUMNS;
     showLookupCmp;
+    authorOrGenreName;
+    authorOrGenreBooksCount;
 
     connectedCallback() {
         this.showLookupCmp = ( Show_Lookup_Component === 'true' ) ? true : false;
@@ -72,18 +74,43 @@ export default class PublisherBooksRelatedListLwc extends LightningElement {
             
             //-- Disable the input --//
             if (event.target.name === 'Author') {
-                if (this.template.querySelector('lightning-input[data-id=genreSearch]').disabled === false) {
-                    this.template.querySelector('lightning-input[data-id=genreSearch]').disabled = true
+                if (this.template.querySelector('lightning-input[data-id=genreSearch]')) {
+                    if (this.template.querySelector('lightning-input[data-id=genreSearch]').disabled === false) {
+                        this.template.querySelector('lightning-input[data-id=genreSearch]').disabled = true
+                    }
                 }
             }
             else {
-                if (this.template.querySelector('lightning-input[data-id=authorSearch]').disabled === false) {
-                    this.template.querySelector('lightning-input[data-id=authorSearch]').disabled = true
+                if (this.template.querySelector('lightning-input[data-id=authorSearch]')) {
+                    if (this.template.querySelector('lightning-input[data-id=authorSearch]').disabled === false) {
+                        this.template.querySelector('lightning-input[data-id=authorSearch]').disabled = true
+                    }
+                }
+                //-- Update genre name to show total books genre --//
+                if (filteredBooksByAuthorOrGenre.length > 0) {
+                    this.authorOrGenreName = filteredBooksByAuthorOrGenre[0].genre;
+                    this.authorOrGenreBooksCount = filteredBooksByAuthorOrGenre.length;
                 }
             }
             if (event.detail.value === '') {
-                this.template.querySelector('lightning-input[data-id=authorSearch]').disabled = false;
-                this.template.querySelector('lightning-input[data-id=genreSearch]').disabled = false
+                if (this.template.querySelector('lightning-input[data-id=authorSearch]')) {
+                    this.template.querySelector('lightning-input[data-id=authorSearch]').disabled = false;
+                }
+                if (this.template.querySelector('lightning-input[data-id=genreSearch]')) {
+                    this.template.querySelector('lightning-input[data-id=genreSearch]').disabled = false;
+                }
+                this.authorOrGenreName = undefined;
+                this.authorOrGenreBooksCount = undefined;
+            }
+
+            //-- If no books to show then show empty table --//
+            if (filteredBooksByAuthorOrGenre.length > 0) {
+                this.noBooksToShow = false;
+            } 
+            else {
+                this.noBooksToShow = true;
+                this.authorOrGenreName = undefined;
+                this.authorOrGenreBooksCount = undefined;
             }
         }
     }
@@ -97,18 +124,32 @@ export default class PublisherBooksRelatedListLwc extends LightningElement {
                 const ltngInput = this.template.querySelector('lightning-input[data-id=genreSearch]');
                 ltngInput.disabled = true;
 
+                //-- Update author name to show total books by him / her --//
+                this.authorOrGenreName = selectedRecord.recordId.Name;
+
                 const chosenAuthorId = selectedRecord.recordId.Id;
                 const filteredBooksByAuthorLookup = this.finalBooksList.filter((book) => {
                     return chosenAuthorId === book.authorId;
                 });
                 this.booksByPublisherRecords = filteredBooksByAuthorLookup;
                 this.fireUpdateHeaderEvent(filteredBooksByAuthorLookup.length);
+
+                //-- If no books to show then show empty table --//
+                if (filteredBooksByAuthorLookup.length > 0) {
+                    this.noBooksToShow = false;
+                    this.authorOrGenreBooksCount = filteredBooksByAuthorLookup.length;
+                } 
+                else {
+                    this.noBooksToShow = true;
+                }
             }
         }
         else {
             this.booksByPublisherRecords = this.finalBooksList;
             const ltngInput = this.template.querySelector('lightning-input[data-id=genreSearch]');
             ltngInput.disabled = false;
+            this.authorOrGenreName = undefined
+            this.authorOrGenreBooksCount = undefined;
         }
     }
 }
