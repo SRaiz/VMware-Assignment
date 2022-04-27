@@ -136,23 +136,28 @@ export default class PublisherBooksRelatedListLwc extends LightningElement {
                 });
                 this.booksByPublisherRecords = filteredBooksByAuthorLookup;
                 this.fireUpdateHeaderEvent(filteredBooksByAuthorLookup.length);
-
-                //-- If no books to show then show empty table --//
-                if (filteredBooksByAuthorLookup.length > 0) {
-                    this.noBooksToShow = false;
-                    this.authorOrGenreBooksCount = filteredBooksByAuthorLookup.length;
-                } 
-                else {
-                    this.noBooksToShow = true;
-                }
+                this.showNoBooksInTable(filteredBooksByAuthorLookup);
             }
         }
         else {
             this.booksByPublisherRecords = this.finalBooksList;
+            this.fireUpdateHeaderEvent(this.booksByPublisherRecords.length);
+            this.showNoBooksInTable(this.finalBooksList);
             const ltngInput = this.template.querySelector('lightning-input[data-id=genreSearch]');
             ltngInput.disabled = false;
-            this.authorOrGenreName = undefined
+            this.authorOrGenreName = undefined;
             this.authorOrGenreBooksCount = undefined;
+        }
+    }
+
+    showNoBooksInTable(filteredBooks) {
+        //-- If no books to show then show empty table --//
+        if (filteredBooks.length > 0) {
+            this.noBooksToShow = false;
+            this.authorOrGenreBooksCount = filteredBooks.length;
+        } 
+        else {
+            this.noBooksToShow = true;
         }
     }
 }
