@@ -89,7 +89,10 @@ export default class PublisherBooksRelatedListLwc extends LightningElement {
                 //-- Update genre name to show total books genre --//
                 if (filteredBooksByAuthorOrGenre.length > 0) {
                     this.authorOrGenreName = filteredBooksByAuthorOrGenre[0].genre;
-                    this.authorOrGenreBooksCount = filteredBooksByAuthorOrGenre.length;
+                    const chosenGenreArray = filteredBooksByAuthorOrGenre.filter((book) => {
+                        return book.genre === this.authorOrGenreName;
+                    });
+                    this.authorOrGenreBooksCount = chosenGenreArray.length;
                 }
             }
             if (event.detail.value === '') {
