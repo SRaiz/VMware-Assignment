@@ -112,4 +112,34 @@ public class PublisherBookDetailClass_Test {
 
         Test.stopTest();
     }
+    
+    /*
+        @Author         : Sidharth Pushp
+        @BuildDate      : 24th April, 2022
+        @Description    : Test method to cover CustomLookupController classes
+        @Params         : none
+        @Return         : none
+    */
+    @IsTest
+    static void customLookupControllerTest() {
+        Test.startTest();
+        	BookAuthor__c bookAuthor = [
+                SELECT 
+                    Id, Book__c 
+                FROM BookAuthor__c
+                LIMIT 1
+            ];
+            
+        	Book__c book = [
+                SELECT
+                    Id, Name, Genre__c
+                FROM Book__c
+                WHERE Id =: bookAuthor.Book__c 
+                LIMIT 1
+            ];
+        
+            CustomLookUpController.fetchLookUpValues( book.Name , 'Book__c' );
+        	CustomLookUpController.fetchLookUpValues( book.Name , '' );
+        Test.stopTest();
+    }
 }
