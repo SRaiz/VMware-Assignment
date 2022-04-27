@@ -187,7 +187,7 @@
             <targetReference>New_Book_Information</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <description>Record Id of the publishing house</description>
         <name>recordId</name>
