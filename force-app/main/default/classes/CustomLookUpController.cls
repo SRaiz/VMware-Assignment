@@ -34,7 +34,8 @@ public class CustomLookUpController {
         
         List<sObject> returnList = new List <sObject>();
       
-        String queryStr =  'SELECT '+  objFieldsToQuery +' FROM ' + objApiName + ' WHERE Name LIKE :searchKey ORDER BY CreatedDate DESC limit 5';
+        String queryStr =  'SELECT '+  objFieldsToQuery +' FROM ' + objApiName + 
+            			   ' WHERE Name LIKE :searchKey ORDER BY CreatedDate DESC limit 5';
         
         try {
             List <sObject> sObjList = Database.query( queryStr );

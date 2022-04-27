@@ -6,6 +6,14 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Show Lookup Component</shortDescription>
-        <value>false</value>
+        <value>true</value>
+    </labels>
+    <labels>
+        <fullName>Book_Author_For_Flow</fullName>
+        <categories>a007Q000005q9PDQAY</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Book Author For Flow</shortDescription>
+        <value>VMware Assignment</value>
     </labels>
 </CustomLabels>
